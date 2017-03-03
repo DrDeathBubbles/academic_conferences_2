@@ -1,0 +1,315 @@
+
+# coding: utf-8
+
+# In[1]:
+
+import zs.bibtex as zs
+from zs.bibtex.parser import parse_string
+import networkx as nx
+import itertools
+import subprocess
+
+
+# In[1]:
+
+with open('./citations.txt') as f:
+    data = f.read()
+
+
+# In[6]:
+
+temp = data.split('@')
+
+
+# In[11]:
+
+temp2 = '@' + temp[1].replace('\n', '')
+
+
+# In[16]:
+
+temp3 = parse_string(temp2)
+
+
+# In[21]:
+
+temp3['einstein1935can']
+
+
+# In[3]:
+
+def parsing_csv(data):
+    temp = str(data)[2:].split('@')
+    temp = ['@' + i.replace('\\n','').replace("'","").replace('"','') for i in temp]
+    temp = [parse_string(i) for i in temp[1:]]
+    return temp
+
+
+# In[4]:
+
+def processing_parse(data):
+    out = [i[list(i.keys())[0]]['author'] for i in data]
+    return out
+
+
+# In[5]:
+
+def processing_parse(data):
+    out = []
+    for i in data:
+        authors = i[list(i.keys())[0]]['author']
+        title = i[list(i.keys())[0]]['title']
+        out.append({'author':authors,'title':title})
+        print(authors,title)
+    return out
+        #print(i[list(i.keys())[0]]['author'])
+
+
+# In[6]:
+
+def python_request_author(author):
+    test = subprocess.Popen(["python2", "scholar.py","-c","50","-a","{}".format(author),'--citation=bt'], stdout=subprocess.PIPE)
+    output = test.communicate()[0]
+    return output
+
+
+# In[7]:
+
+def python_request_words(words):
+    test = subprocess.Popen(["python2", "scholar.py","-c","50","-all","{}".format(words),'--citation=bt'], stdout=subprocess.PIPE)
+    output = test.communicate()[0]
+    return output
+
+
+# In[12]:
+
+aaron = python_request_author('Aaron Meagher')
+
+
+# In[13]:
+
+aaron
+
+
+# In[136]:
+
+test = python_request_words('Bubbles')
+
+
+# In[144]:
+
+temp6 = parsing_csv(test)
+temp7 = processing_parse(temp6)
+
+
+# In[174]:
+
+G = nx.Graph()
+seed_word = 'Bubbles'
+initial_seed = python_request_words(seed_word)
+initial_seed_processed = parsing_csv(initial_seed)
+for paper in initial_seed_processed:
+    #paper[list(paper.keys())][0]
+    element = paper[list(paper.keys())[0]]
+    authors = element['author']
+    title = element['title']
+    for author in authors:
+        G.add_node(author,title = title)
+    a = list(itertools.combinations(authors,2))
+    for i in a:
+        G.add_edge(*i)
+
+
+# In[11]:
+
+G = nx.Graph()
+author_list = []
+seed_word = 'Bubbles'
+initial_seed = python_request_words(seed_word)
+initial_seed_processed = parsing_csv(initial_seed)
+for paper in initial_seed_processed:
+    #paper[list(paper.keys())][0]
+    element = paper[list(paper.keys())[0]]
+    authors = element['author']
+    title = element['title']
+    for author in authors:
+        author_list.extend([author])
+        G.add_node(author,title = title)
+    a = list(itertools.combinations(authors,2))
+    for i in a:
+        G.add_edge(*i)
+
+for author in author_list[:2]:
+    temp = python_request_author(author)
+    temp = parsing_csv(temp)
+
+
+# In[12]:
+
+initial_seed
+
+
+# In[9]:
+
+initial_seed
+
+
+# In[225]:
+
+temp2 = ['@' + i.replace('\\n','') for i in str(temp).split('@')[1:]]
+temp2[9]
+parse_string(temp2[9].replace('"',''))
+
+
+# In[193]:
+
+i[0]
+
+
+# In[180]:
+
+temp = [1,2,3,4,5]
+
+
+# In[188]:
+
+temp.extend([6])
+
+
+# In[189]:
+
+temp
+
+
+# In[186]:
+
+try:
+    temp.remove(6)
+except:
+    print('Error')
+
+
+# In[184]:
+
+temp
+
+
+# In[169]:
+
+G.node['Zhao, Lin Lin']
+
+
+# In[1]:
+
+G.edges()
+
+
+# In[165]:
+
+authors
+
+
+# In[158]:
+
+paper
+
+
+# In[162]:
+
+paper[list(paper.keys())[0]]['author']
+
+
+# In[152]:
+
+initial_seed_processed
+
+
+# In[145]:
+
+temp7
+
+
+# In[126]:
+
+temp = str(aaron)[2:]
+temp = temp.split('@')
+temp = ['@' + i.replace('\\n','').replace("'","") for i in temp]
+temp = [parse_string(i) for i in temp[1:]]
+
+
+# In[134]:
+
+parsing_csv(aaron)
+
+
+# In[119]:
+
+temp = "@article{meagher2010nuclear,  title={Nuclear actin-related proteins at the core of epigenetic control},  author={Meagher, Richard B and Kandasamy, Muthugapatti K and Smith, Aaron P and McKinney, Elizabeth C},  journal={Plant signaling \\\\& behavior},  volume={5},  number={5},  pages={518--522},  year={2010},  publisher={Taylor \\\\& Francis}}"
+
+
+# In[120]:
+
+parse_string(temp)
+
+
+# In[102]:
+
+a = [1,2,3,4,5,6]
+
+
+# In[103]:
+
+a[1:-1]
+
+
+# In[95]:
+
+parsing_csv(str(aaron)[2:])
+
+
+# In[92]:
+
+data
+
+
+# In[34]:
+
+temp = parsing_csv(data)
+
+
+# In[44]:
+
+temp[0][list(temp[0].keys())[0]]
+
+
+# In[56]:
+
+processing_parse(temp)
+
+
+# In[80]:
+
+import subprocess
+test = subprocess.Popen(["python2", "scholar.py","-a","albert einstein",'--citation=bt'], stdout=subprocess.PIPE)
+output = test.communicate()[0]
+
+
+# In[ ]:
+
+python2 scholar.py -c 5 -a "albert einstein" -t --none "quantum theory" --after 1970 --citation="bt"
+
+
+# In[81]:
+
+output
+
+
+# In[60]:
+
+get_ipython().system(u'pwd')
+
+
+# In[ ]:
+
+
+
