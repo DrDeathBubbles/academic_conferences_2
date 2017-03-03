@@ -99,5 +99,9 @@ ENV/
 #
 data/*
 *.txt
-
+*.gml
+*.pickle
+*.gephi
+*.csv
+*.json
 
