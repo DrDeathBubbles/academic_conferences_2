@@ -102,7 +102,7 @@ if __name__ == '__main__':
             
         saving_graph(G,seed_word+'.csv')
         nx.write_gpickle(G,seed_word+'.pickle')
-    
+        nx.write_gml(G,seed_word + '.gml')    
 
 
 
