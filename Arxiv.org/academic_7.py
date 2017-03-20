@@ -86,7 +86,8 @@ if __name__ == '__main__':
     #G = nx.Graph()
     #temp = run_network_analysis('Graphene',10,10)
     #Initial seed
-    seed_words = ['nano','star','dynamic','galaxy','galaxies','cosmic','the','active']    
+#    seed_words = ['nano','star','dynamic','galaxy','galaxies','cosmic','the','active']    
+    seed_words = ['nano','ethics','pico','active','star','galaxy','soft matter','carbon','nanotubes']
     for seed_word in seed_words:
         G = nx.Graph()
         a = search_all(seed_word,0,100)

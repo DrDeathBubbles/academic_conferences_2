@@ -74,7 +74,8 @@ for paper in initial_seed_processed:
     for i in a:
         G.add_edge(*i)
 
-for author in author_list[:2]:
+for author in author_list:
+    print(author)
     temp = python_request_author(author)
     if len(temp) == 0:
         print('Request limit reached')
