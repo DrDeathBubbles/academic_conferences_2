@@ -59,7 +59,7 @@ def python_request_words(words):
 
 G = nx.Graph()
 author_list = []
-seed_word = 'Bubbles'
+seed_word = 'Graphene'
 initial_seed = python_request_words(seed_word)
 initial_seed_processed = parsing_csv(initial_seed)
 for paper in initial_seed_processed:
@@ -92,4 +92,4 @@ for author in author_list[:2]:
     nx.write_gml(G,seed_word + '.gml')
     nx.write_gpickle(G,seed_word + '.pickle')
             
-
+print('Hello')
