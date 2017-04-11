@@ -1,8 +1,4 @@
 
-# coding: utf-8
-
-# In[10]:
-
 import zs.bibtex as zs
 from zs.bibtex.parser import parse_string
 import networkx as nx
@@ -10,7 +6,6 @@ import itertools
 import subprocess
 
 
-# In[11]:
 
 def parsing_csv(data):
     temp = str(data)[2:].split('@')
@@ -19,14 +14,12 @@ def parsing_csv(data):
     return temp
 
 
-# In[12]:
 
 def processing_parse(data):
     out = [i[list(i.keys())[0]]['author'] for i in data]
     return out
 
 
-# In[13]:
 
 def processing_parse(data):
     out = []
@@ -39,23 +32,17 @@ def processing_parse(data):
         #print(i[list(i.keys())[0]]['author'])
 
 
-# In[14]:
 
 def python_request_author(author):
     test = subprocess.Popen(["python2", "scholar.py","-c","50","-a","{}".format(author),'--citation=bt'], stdout=subprocess.PIPE)
     output = test.communicate()[0]
     return output
 
-
-# In[15]:
-
 def python_request_words(words):
     test = subprocess.Popen(["python2", "scholar.py","-c","50","-all","{}".format(words),'--citation=bt'], stdout=subprocess.PIPE)
     output = test.communicate()[0]
     return output
 
-
-# In[15]:
 
 G = nx.Graph()
 author_list = []
